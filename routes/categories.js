@@ -1,16 +1,16 @@
-var express = require('express');
-var router = express.Router();
-var CategoriesModel = require('../libs/mongoose').CategoriesModel;
+const express = require('express');
 
-router.get('/', function (req, res) {
-    return CategoriesModel.find(function (err, categories) {
-        if (!err) {
-            return res.send(categories);
-        } else {
-            res.statusCode = 500;
-            return res.send({ error: 'Server error' });
-        }
-    });
-});
+const router = express.Router();
+const CategoriesModel = require('../libs/mongoose').CategoriesModel;
+
+router.get('/', (req, res) =>
+  CategoriesModel.find((err, categories) => {
+    if (!err) {
+      return res.send(categories);
+    }
+    res.statusCode = 500;
+    return res.send({ error: 'Server error' });
+  })
+);
 
 module.exports = router;

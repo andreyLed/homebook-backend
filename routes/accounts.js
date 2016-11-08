@@ -1,16 +1,16 @@
-var express = require('express');
-var router = express.Router();
-var AccountsModel = require('../libs/mongoose').AccountsModel;
+const express = require('express');
 
-router.get('/', function (req, res, next) {
-    return AccountsModel.find(function (err, operations) {
-        if (!err) {
-            return res.send(operations);
-        } else {
-            res.statusCode = 500;
-            return res.send({ error: 'Server error' });
-        }
-    });
-});
+const router = express.Router();
+const AccountsModel = require('../libs/mongoose').AccountsModel;
+
+router.get('/', (req, res) =>
+  AccountsModel.find((err, operations) => {
+    if (!err) {
+      return res.send(operations);
+    }
+    res.statusCode = 500;
+    return res.send({ error: 'Server error' });
+  })
+);
 
 module.exports = router;
