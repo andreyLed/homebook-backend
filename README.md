@@ -1,13 +1,14 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
 
-### How do I get set up? ###
-* if you dont install mongoDB, insatll it
+
+* if you dont install mongoDB, install it with this tutorial https://docs.mongodb.com/manual/installation/
 * open terminal from folder where do you want to install this project
-* use this command:
-* git clone git@bitbucket.org:sneg/homebook-back.git
+* use this command in terminal:
+* git clone https://sneg@bitbucket.org/sneg/homebook-back.git
+* cd homebook-back
 * npm i
-* in free terminal you need to use this command "mongod —dbpath homeDook-back/data/" for run mongoDB
-* in free terminal from folder homeDook-back/ run "npm start"
-
+* press ctrl+shift+t for open a new terminal in directory "homeDook-back"
+* enter this command "mongod --dbpath data/" for run mongoDB ("data/" it is your path to db)
+* press ctrl+shift+t for open a new terminal in directory "homeDook-back"
+* enter this command "npm start"
