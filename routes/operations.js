@@ -60,7 +60,7 @@ router.post('/', (req, res) => {
     amount: req.body.amount,
     date: req.body.date,
     comment: req.body.comment,
-    payment_method: req.body.payment_method
+    account: req.body.account
   });
 
   operation.save((err) => {
@@ -88,7 +88,7 @@ router.put('/:id', (req, res) =>
     operation.amount = req.body.amount;
     operation.date = req.body.date;
     operation.comment = req.body.comment;
-    operation.payment_method = req.body.payment_method;
+    operation.account = req.body.account;
 
     return operation.save((saveErr) => {
       if (!saveErr) {

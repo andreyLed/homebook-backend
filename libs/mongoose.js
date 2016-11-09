@@ -17,7 +17,7 @@ const operation = new Schema(
     amount: { type: String, required: true },
     date: { type: Date, required: true },
     comment: { type: String, required: true },
-    payment_method: { type: String, required: true }
+    account: { type: String, required: true }
   },
   { versionKey: false }
 );
