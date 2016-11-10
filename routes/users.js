@@ -1,9 +1,54 @@
 const express = require('express');
 
 const router = express.Router();
+const AccountsModel = require('../libs/mongoose').AccountsModel;
+const CategoriesModel = require('../libs/mongoose').CategoriesModel;
 const OperationModel = require('../libs/mongoose').OperationModel;
 
+
 router.get('/', (req, res) => {
+  const userData = {};
+
+  AccountsModel.find((err, accounts) => {
+    if (!err) {
+      userData.accounts = accounts;
+    }
+  }).then(() => {
+    CategoriesModel.find((err, categories) => {
+      if (!err) {
+        userData.categories = categories;
+      }
+    });
+  }).then(() => {
+    // if (req.query.operations) {
+    //   OperationModel.find((err, operations) => {
+    //     if (!err) {
+    //       userData.operations = operations;
+    //       res.send(userData);
+    //     }
+    //   });
+    // }
+    OperationModel.aggregate([
+      {
+        $group: {
+          _id: '$account',
+          amount: { $sum: '$amount' }
+        }
+      }
+    ], (err, operations) => {
+      if (!err) {
+        userData.balance = operations;
+        res.send(userData);
+      }
+    });
+  }).catch(() => {
+    res.statusCode = 500;
+    return res.send({ error: 'Server error' });
+  });
+});
+
+
+router.get('/operations', (req, res) => {
   if (req.query.type === '0' || req.query.type === '1') {
     const type = ['доход', 'расход'];
     return OperationModel.find({ type: type[req.query.type] }, (err, operations) => {
@@ -39,7 +84,7 @@ router.get('/', (req, res) => {
   });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/operations/:id', (req, res) => {
   OperationModel.findById(req.params.id, (err, article) => {
     if (!article) {
       res.statusCode = 404;
@@ -53,7 +98,7 @@ router.get('/:id', (req, res) => {
   });
 });
 
-router.post('/', (req, res) => {
+router.post('/operations', (req, res) => {
   const operation = new OperationModel({
     type: req.body.type,
     category: req.body.category,
@@ -77,7 +122,7 @@ router.post('/', (req, res) => {
   });
 });
 
-router.put('/:id', (req, res) =>
+router.put('/operations/:id', (req, res) =>
   OperationModel.findById(req.params.id, (err, operation) => {
     if (!operation) {
       res.statusCode = 404;
@@ -105,7 +150,7 @@ router.put('/:id', (req, res) =>
   })
 );
 
-router.delete('/:id', (req, res) =>
+router.delete('/operations/:id', (req, res) =>
   OperationModel.findById(req.params.id, (err, article) => {
     if (!article) {
       res.statusCode = 404;

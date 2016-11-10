@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/bookkeepingDB');
 const db = mongoose.connection;
 
@@ -14,7 +15,7 @@ const operation = new Schema(
   {
     type: { type: String, required: true },
     category: { type: String, required: true },
-    amount: { type: String, required: true },
+    amount: { type: Number, required: true },
     date: { type: Date, required: true },
     comment: { type: String, required: true },
     account: { type: String, required: true }
