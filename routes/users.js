@@ -9,42 +9,43 @@ const OperationModel = require('../libs/mongoose').OperationModel;
 router.get('/', (req, res) => {
   const userData = {};
 
-  AccountsModel.find((err, accounts) => {
+  return AccountsModel.find((err, accounts) => {
     if (!err) {
       userData.accounts = accounts;
     }
-  }).then(() => {
+  }).then(() =>
     CategoriesModel.find((err, categories) => {
       if (!err) {
         userData.categories = categories;
       }
-    });
-  }).then(() => {
-    // if (req.query.operations) {
-    //   OperationModel.find((err, operations) => {
-    //     if (!err) {
-    //       userData.operations = operations;
-    //       res.send(userData);
-    //     }
-    //   });
-    // }
-    OperationModel.aggregate([
-      {
-        $group: {
-          _id: '$account',
-          amount: { $sum: '$amount' }
-        }
+    })
+    ).then(() => {
+      if (req.query.operations === 'true') {
+        OperationModel.find((err, operations) => {
+          if (!err) {
+            userData.operations = operations;
+            res.send(userData);
+          }
+        });
+      } else {
+        OperationModel.aggregate([
+          {
+            $group: {
+              _id: '$account',
+              amount: { $sum: '$amount' }
+            }
+          }
+        ], (err, operations) => {
+          if (!err) {
+            userData.balance = operations;
+            res.send(userData);
+          }
+        });
       }
-    ], (err, operations) => {
-      if (!err) {
-        userData.balance = operations;
-        res.send(userData);
-      }
+    }).catch(() => {
+      res.statusCode = 500;
+      res.send({ error: 'Server error' });
     });
-  }).catch(() => {
-    res.statusCode = 500;
-    return res.send({ error: 'Server error' });
-  });
 });
 
 
