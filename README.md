@@ -4,7 +4,7 @@
 
 * Если Вы не установили mongoDB, установите используя это руководство <https://docs.mongodb.com/manual/installation/>
 * Откройте терминал, перейдите в ту папку где хотите разместить этот проект 
-* Клонируйте этот проект с репозитория используя команду: git clone https://github.com/negodyaykin/homebook-backend.git
+* Клонируйте этот проект с репозитория используя команду: git clone https://github.com/andreyLed/homebook-backend.git
 * Перейдите в папку с проектом используя команду: cd homebook-backend 
 * Установите все зависимости проекта используя команду: npm i
 * Откройте новую вкладку терминала в текущем окне терминала, используя команду: ctrl+shift+t
@@ -19,7 +19,7 @@
 * if you dont install mongoDB, install it with this tutorial <https://docs.mongodb.com/manual/installation/>
 * open terminal from folder where do you want to install this project
 * use this command in terminal:
-*   git clone https://github.com/negodyaykin/homebook-backend.git
+*   git clone https://github.com/andreyLed/homebook-backend.git
 *   cd homebook-back
 *   npm i
 *   press ctrl+shift+t for open a new terminal in directory "homeDook-back"
